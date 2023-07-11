@@ -21,10 +21,10 @@ public class DBUtil {
         Connection conn = null;
         try {
 
-            String dbURL = "jdbc:sqlserver://LAPTOP-LJ22SJA1\\TRUONG223;databaseName=EIPS;encrypt=true;trustServerCertificate=true;";
+            String dbURL = "jdbc:sqlserver://db:1433;databaseName=EIPS;encrypt=true;trustServerCertificate=true;";
             //String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName
             String user = "sa";
-            String pass = "12345";
+            String pass = "Aqswde123@";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //// Class.forName("com.mysql.jdbc.Driver");
             // DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
