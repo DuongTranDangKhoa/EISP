@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-
+@ToString
 public class EventDTO implements Serializable {
 
     private int id;
@@ -32,5 +32,7 @@ public class EventDTO implements Serializable {
     private String area;
     private String username;
     private boolean status;
+    
+    
     
 }

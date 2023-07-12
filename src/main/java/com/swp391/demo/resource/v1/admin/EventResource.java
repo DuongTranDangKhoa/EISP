@@ -47,6 +47,7 @@ public class EventResource {
             return Response.status(406, "No Event in Project").build();
 
         }
+        
         return Response.ok(list).build();
 
     }

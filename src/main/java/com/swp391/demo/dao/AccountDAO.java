@@ -52,7 +52,7 @@ public class AccountDAO {
                 stm.setString(2, account.getPassword());
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    String name = rs.getNString("Name");
+                    String name = rs.getString("Name");
                     String role = rs.getString("Role");
                     Boolean status = rs.getBoolean("Status");
                     dto = new AccountDTO(account.getUsername(), account.getPassword(), name, role, status);
