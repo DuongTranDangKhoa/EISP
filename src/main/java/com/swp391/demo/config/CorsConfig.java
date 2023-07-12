@@ -14,15 +14,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author lnhtr
  */
 
-@Configuration
-public class CorsConfig implements WebMvcConfigurer{
-    @Override
-    public void addCorsMappings (CorsRegistry resgitry){
-        resgitry.addMapping("/**")
-                .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
-                .allowedOriginPatterns("*")
-                .allowedOrigins("*")
-                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
-                
-    }
-}
+//@Configuration
+//public class CorsConfig implements WebMvcConfigurer{
+//    @Override
+//    public void addCorsMappings (CorsRegistry resgitry){
+//        resgitry.addMapping("/**")
+//                .allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS")
+//                .allowedOriginPatterns("*")
+//                .allowedOrigins("*")
+//                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials");
+//
+//    }
+//}
