@@ -58,7 +58,7 @@ public class GeneralResource {
     public Response checkLogin(AccountDTO dto) throws SQLException, URISyntaxException {
         AccountDTO x = dao.checkLogin(dto);
         if (x == null) {
-            return Response.status(406,"loi dang nhap").build();
+            return Response.status(406,"Username or password wrong").build();
         }
         return Response.accepted(x).build();
     }
