@@ -1,0 +1,94 @@
+CREATE TABLE Account (
+  Username varchar(100) NOT NULL, 
+  Password varchar(100) NOT NULL, 
+  Name     varchar(500), 
+  Role     varchar(100) NOT NULL, 
+  Status   bit(1) DEFAULT true NOT NULL, 
+  PRIMARY KEY (Username));
+CREATE TABLE AccountShop (
+  Username varchar(100) NOT NULL, 
+  ShopId   varchar(100) NOT NULL, 
+  Status   bit(1), 
+  PRIMARY KEY (Username, 
+  ShopId));
+CREATE TABLE Card (
+  Id          int(11) NOT NULL AUTO_INCREMENT, 
+  EventId     int(11) NOT NULL, 
+  Balance     float DEFAULT 0, 
+  Usename     varchar(500), 
+  PhoneNumber varchar(10), 
+  Status      bit(1) DEFAULT true, 
+  PRIMARY KEY (Id));
+CREATE TABLE Combo (
+  No       int(11) NOT NULL AUTO_INCREMENT, 
+  Id       int(11), 
+  IdMake   int(10), 
+  Quantity int(11), 
+  PRIMARY KEY (No));
+CREATE TABLE Event (
+  ID          int(11) NOT NULL AUTO_INCREMENT, 
+  Name        varchar(50) NOT NULL, 
+  Description varchar(500), 
+  BeginDate   date, 
+  EndDate     date, 
+  Area        varchar(500), 
+  Username    varchar(100) NOT NULL, 
+  Status      bit(1) DEFAULT true, 
+  Image       varchar(100), 
+  PRIMARY KEY (ID));
+CREATE TABLE ImageEvent (
+  No      int(11) NOT NULL AUTO_INCREMENT, 
+  EventId int(11) NOT NULL, 
+  Image   varchar(1000), 
+  PRIMARY KEY (No));
+CREATE TABLE `Order` (
+  OrderId int(11) NOT NULL AUTO_INCREMENT, 
+  `Date`  timestamp NULL, 
+  ShopId  varchar(100), 
+  CardId  int(11), 
+  Total   float, 
+  PRIMARY KEY (OrderId));
+CREATE TABLE OrderDetail (
+  No        int(10) NOT NULL AUTO_INCREMENT, 
+  OrderId   int(11) NOT NULL, 
+  ProductId int(11) NOT NULL, 
+  Quantity  int(11), 
+  Price     float, 
+  Total     float, 
+  PRIMARY KEY (No));
+CREATE TABLE Product (
+  Id          int(11) NOT NULL AUTO_INCREMENT, 
+  ShopId      varchar(100) NOT NULL, 
+  Name        varchar(500) NOT NULL, 
+  Price       float NOT NULL, 
+  Image       varchar(1000), 
+  Description varchar(700), 
+  Category    varchar(10) NOT NULL, 
+  Status      bit(1) DEFAULT true NOT NULL, 
+  PRIMARY KEY (Id));
+CREATE TABLE Shop (
+  Id          varchar(100) NOT NULL, 
+  EventId     int(11) NOT NULL, 
+  Name        varchar(500) NOT NULL, 
+  Description varchar(700), 
+  Area        varchar(100), 
+  Status      bit(1) DEFAULT true NOT NULL, 
+  PRIMARY KEY (Id));
+CREATE TABLE `Transaction` (
+  Id      int(11) NOT NULL AUTO_INCREMENT, 
+  CardId  int(11) NOT NULL, 
+  OrderId int(11) NOT NULL, 
+  PRIMARY KEY (Id));
+ALTER TABLE `Transaction` ADD CONSTRAINT FKTransactio473547 FOREIGN KEY (CardId) REFERENCES Card (Id);
+ALTER TABLE `Transaction` ADD CONSTRAINT FKTransactio687479 FOREIGN KEY (OrderId) REFERENCES `Order` (OrderId);
+ALTER TABLE Card ADD CONSTRAINT FKCard585247 FOREIGN KEY (EventId) REFERENCES Event (ID);
+ALTER TABLE Shop ADD CONSTRAINT FKShop68550 FOREIGN KEY (EventId) REFERENCES Event (ID);
+ALTER TABLE Product ADD CONSTRAINT FKProduct527516 FOREIGN KEY (ShopId) REFERENCES Shop (Id);
+ALTER TABLE OrderDetail ADD CONSTRAINT FKOrderDetai559638 FOREIGN KEY (ProductId) REFERENCES Product (Id);
+ALTER TABLE OrderDetail ADD CONSTRAINT FKOrderDetai221089 FOREIGN KEY (OrderId) REFERENCES `Order` (OrderId);
+ALTER TABLE AccountShop ADD CONSTRAINT FKAccountSho285522 FOREIGN KEY (ShopId) REFERENCES Shop (Id);
+ALTER TABLE AccountShop ADD CONSTRAINT FKAccountSho782127 FOREIGN KEY (Username) REFERENCES Account (Username);
+ALTER TABLE Combo ADD CONSTRAINT FKCombo475968 FOREIGN KEY (IdMake) REFERENCES Product (Id);
+ALTER TABLE Combo ADD CONSTRAINT FKCombo475967 FOREIGN KEY (Id) REFERENCES Product (Id);
+ALTER TABLE Event ADD CONSTRAINT FKEvent534795 FOREIGN KEY (Username) REFERENCES Account (Username);
+ALTER TABLE ImageEvent ADD CONSTRAINT FKImageEvent227803 FOREIGN KEY (EventId) REFERENCES Event (ID);
