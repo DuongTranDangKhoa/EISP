@@ -16,6 +16,7 @@ services:
       - ./db/entrypoint.sh:/entrypoint.sh
       - ./db/init.sh:/init.sh
       - ./db/init.sql:/init.sql
+    restart: always
   app:
     container_name: eips
     build:
@@ -24,5 +25,6 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    restart: always
 volumes:
   db-data:
