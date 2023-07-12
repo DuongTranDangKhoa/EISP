@@ -81,11 +81,11 @@ public class EventDAO implements Serializable {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("Id");
-                    String name = rs.getNString("Name");
+                    String name = rs.getString("Name");
                     String description = rs.getNString("Desrciption");
                     Date beginDate = rs.getDate("BeginDate");
                     Date endDate = rs.getDate("EndDate");
-                    String area = rs.getNString("Area");
+                    String area = rs.getString("Area");
                     String username = rs.getString("Username");
                     String img = rs.getString("Image");
                     boolean status = rs.getBoolean("Status");
@@ -186,4 +186,6 @@ public class EventDAO implements Serializable {
         }
         return dto;
     }
+    
+    
 }
