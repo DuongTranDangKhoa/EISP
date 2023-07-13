@@ -90,7 +90,7 @@ CREATE TABLE [dbo].[Event](
     [Area] [varchar](500) NULL,
     [Username] [varchar](100) NOT NULL,
     [Status] [bit] NULL,
-    [Image] [varchar](100) NULL,
+    [Image] [varchar](1000) NULL,
     PRIMARY KEY CLUSTERED
 (
 [ID] ASC
