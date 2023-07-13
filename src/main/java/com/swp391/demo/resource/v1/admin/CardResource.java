@@ -49,7 +49,7 @@ public class CardResource {
     }
     
     @Path("{eventId}")
-    @POST
+    @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getCardInEvent(@PathParam("eventId") int eventId) throws SQLException {
         dao.getAllCard(eventId);
