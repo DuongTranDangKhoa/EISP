@@ -42,7 +42,7 @@ public class EventDAO implements Serializable {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Insert into Event(Name, Desrciption,Image, BeginDate, EndDate, Area, Username)"
+                String sql = "Insert into Event(Name, Description,Image, BeginDate, EndDate, Area, Username)"
                         + " Values(?,?,?,?,?,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, dto.getName());
@@ -82,7 +82,7 @@ public class EventDAO implements Serializable {
                 while (rs.next()) {
                     int id = rs.getInt("Id");
                     String name = rs.getString("Name");
-                    String description = rs.getNString("Desrciption");
+                    String description = rs.getNString("Description");
                     Date beginDate = rs.getDate("BeginDate");
                     Date endDate = rs.getDate("EndDate");
                     String area = rs.getString("Area");
@@ -116,7 +116,7 @@ public class EventDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Update Event "
-                        + " Set Name = ?, Desrciption = ?, BeginDate = ?, EndDate = ?, Status = ?, Image = ?"
+                        + " Set Name = ?, Description = ?, BeginDate = ?, EndDate = ?, Status = ?, Image = ?"
                         + " Where Id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, dto.getName());
@@ -150,7 +150,7 @@ public class EventDAO implements Serializable {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Select e.id, e.Image, e.Name, e.Desrciption, e.BeginDate, e.EndDate, e.Area, e.Username, e.Status "
+                String sql = "Select e.id, e.Image, e.Name, e.Description, e.BeginDate, e.EndDate, e.Area, e.Username, e.Status "
                         + " from Event e, Shop s "
                         + "	where e.Id = s.EventId "
                         + "	and s.Id = ?";
@@ -162,7 +162,7 @@ public class EventDAO implements Serializable {
                     int id = rs.getInt("Id");
                     String img = rs.getString("Image");
                     String name = rs.getNString("Name");
-                    String des = rs.getNString("Desrciption");
+                    String des = rs.getNString("Description");
                     Date beginDate = rs.getDate("BeginDate");
                     Date endDate = rs.getDate("EndDate");
                     String area = rs.getString("Area");
