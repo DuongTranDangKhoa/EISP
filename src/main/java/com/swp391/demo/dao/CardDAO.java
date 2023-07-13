@@ -222,7 +222,7 @@ public class CardDAO implements Serializable {
         return result;
     }
 
-    public void getAllCard() throws SQLException {
+    public void getAllCard(int key) throws SQLException {
         PreparedStatement stm = null;
         ResultSet rs = null;
         listCard = null;
@@ -230,8 +230,10 @@ public class CardDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Select * "
-                        + " From Card ";
+                        + " From Card "
+                        + " Where EventId = ?";
                 stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("Id");

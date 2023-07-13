@@ -9,9 +9,11 @@ import com.swp391.demo.dto.CardDTO;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -44,5 +46,17 @@ public class CardResource {
             }
         }
         return Response.status(Response.Status.CREATED).build();
+    }
+    
+    @Path("{eventId}")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCardInEvent(@PathParam("eventId") int eventId) throws SQLException {
+        dao.getAllCard(eventId);
+        List<CardDTO> list = dao.getListCard();
+        if (list != null) {
+            return Response.ok(list).build();
+        }
+        return Response.status(200, "No card in event").build();
     }
 }
