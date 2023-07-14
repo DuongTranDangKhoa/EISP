@@ -86,4 +86,34 @@ public class AccountShopDAO implements Serializable {
         }
         return result;
     }
+
+    public boolean setAcccountShop(AccountShopDTO dto) throws SQLException {
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Insert into AccountShop(Username, ShopId) "
+                        + " values(?,?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, dto.getUsername());
+                stm.setString(2, dto.getShopId());
+
+                int i = stm.executeUpdate();
+                if (i > 0) {
+                    result = true;
+                }
+
+            }
+        } finally {
+
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
 }

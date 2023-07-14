@@ -73,7 +73,7 @@ public class AccountResource {
 
         if (result) {
             
-            return Response.status(Response.Status.ACCEPTED).build();
+            return Response.ok(dto).build();
         }
         return Response.status(406, "Fail to update Account").build();
     }
