@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,13 @@ public class AccountShopDAO implements Serializable {
 
     private static AccountShopDAO instance;
     private Connection con = DBUtil.makeConnection();
+    private List<AccountShopDTO> listAccountShop;
+
+    public List<AccountShopDTO> getListAccountShop() {
+        return listAccountShop;
+    }
+    
+    
 
     public static AccountShopDAO getInstance() {
         if (instance == null) {
@@ -115,5 +124,41 @@ public class AccountShopDAO implements Serializable {
             }
         }
         return result;
+    }
+    
+    public void getInfoAccountShop() throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        listAccountShop = null;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select * From AccountShop "
+                        + "  Status  = 'true'";
+                stm = con.prepareStatement(sql);
+                
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    boolean status = rs.getBoolean("Status");
+                    AccountShopDTO dto = new AccountShopDTO(username, password, status);
+                    if (listAccountShop == null) {
+                        listAccountShop = new ArrayList<>();
+                    }
+                    listAccountShop.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }

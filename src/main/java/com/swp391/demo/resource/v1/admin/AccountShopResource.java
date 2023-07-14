@@ -7,11 +7,14 @@ package com.swp391.demo.resource.v1.admin;
 import com.swp391.demo.dao.AccountShopDAO;
 import com.swp391.demo.dto.AccountShopDTO;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -53,5 +56,15 @@ public class AccountShopResource {
             return Response.status(Response.Status.ACCEPTED).build();
         }
         return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    }
+    
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInfoAccountShop() throws SQLException{
+        dao.getInfoAccountShop();
+        List<AccountShopDTO> list = dao.getListAccountShop();
+        
+        return Response.ok(list).build();
     }
 }
