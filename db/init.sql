@@ -13,7 +13,7 @@ GO
 CREATE TABLE [dbo].[Account](
     [Username] [varchar](100) NOT NULL,
     [Password] [varchar](100) NOT NULL,
-    [Name] [varchar](500) NULL,
+    [Name] [nvarchar](500) NULL,
     [Role] [varchar](100) NOT NULL,
     [Status] [bit] NOT NULL,
     PRIMARY KEY CLUSTERED
@@ -49,7 +49,7 @@ CREATE TABLE [dbo].[Card](
     [Id] [int] IDENTITY(1,1) NOT NULL,
     [EventId] [int] NOT NULL,
     [Balance] [real] NULL,
-    [Usename] [varchar](500) NULL,
+    [Usename] [nvarchar](500) NULL,
     [PhoneNumber] [varchar](10) NULL,
     [Status] [bit] NULL,
     PRIMARY KEY CLUSTERED
@@ -230,28 +230,28 @@ CREATE TABLE [dbo].[Transaction](
     SET IDENTITY_INSERT [dbo].[Combo] OFF
     SET IDENTITY_INSERT [dbo].[Event] ON
 
-    INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1, N'H?i xuân', N'H?i xuân lang cóc năm 2023', CAST(N'2023-01-10' AS Date), CAST(N'2023-01-17' AS Date), N'FPT', N'admin', 1, N'hoi xuan.jpg')
-    INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (2, N'back to school', N'Back to school 2020=2023', CAST(N'2023-02-10' AS Date), CAST(N'2023-02-17' AS Date), N'FPT', N'admin', 1, N'bts.jpg')
+    INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1, N'Hội xuân', N'Hội xuân lang cóc năm 2023', CAST(N'2023-01-10' AS Date), CAST(N'2023-01-17' AS Date), N'FPT', N'admin', 1, N'hoi xuan.jpg')
+    INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (2, N'back to school', N'Back to school 2020-2023', CAST(N'2023-02-10' AS Date), CAST(N'2023-02-17' AS Date), N'FPT', N'admin', 1, N'bts.jpg')
     SET IDENTITY_INSERT [dbo].[Event] OFF
     SET IDENTITY_INSERT [dbo].[Product] ON
 
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1, N'FEV', N'Bánh tráng', 20000, N'banhs trang.jpg', N'banh trang cu?n bơ', N'Food', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1, N'FEV', N'Bánh tráng', 20000, N'banhs trang.jpg', N'banh trang cuốn bơ', N'Food', 1)
     INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (2, N'FEV', N'Teramisu', 50000, N'teramisu chanh leo.jpg', N'teramisu chanh leo', N'Food', 1)
     INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (3, N'FEV', N'combo1', 80000, N'comboFEV1.jpg', N'2 Bánh tráng + Teramisu', N'Combo', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (4, N'FVC', N'Hambuger', 30000, N'Hambuger.jpg', N'Hambuger b? x?t cay', N'Food', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (5, N'FVC', N'Coca', 10000, N'cocacola.jpg', N'nư?c ng?t có gas cocke', N'Drink', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (6, N'FVC', N'combo1', 45000, N'burka.jpg', N'cocacola + hamburger b?', N'Combo', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (7, N'FFC', N'bánh m? kem', 20000, N'banhmikem.jpg', N'bánh m? nhân k?p vani', N'Food', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (8, N'FFC', N'xoài l?c', 15000, N'huxoailac.jpg', N'xoài l?c siêu cay sieu ngonn', N'Food', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (9, N'FFC', N'combo1', 32000, N'comboFFC', N'2 bánh m? kem + 1 h? xoài', N'Combo', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (10, N'CSG', N'Trà s?a', 20000, N'lytraf.jpg', N'trà s?a trân châu đư?ng  đen', N'Drink', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (11, N'CSG', N'Nư?c cam', 15000, N'nuoccam.jpg', N'cam ép', N'Drink', 1)
-    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (12, N'CSG', N'Combo nư?c', 45000, N'nuoc.jpg', N'2nươc cam + 1tra s?a', N'Combo', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (4, N'FVC', N'Hambuger', 30000, N'Hambuger.jpg', N'Hambuger bò xốt cay', N'Food', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (5, N'FVC', N'Coca', 10000, N'cocacola.jpg', N'nước ngọt có gas cocke', N'Drink', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (6, N'FVC', N'combo1', 45000, N'burka.jpg', N'cocacola + hamburger bò', N'Combo', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (7, N'FFC', N'bánh mì kem', 20000, N'banhmikem.jpg', N'bánh mì nhân kẹp vani', N'Food', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (8, N'FFC', N'xoài lắc', 15000, N'huxoailac.jpg', N'xoài lắc siêu cay sieu ngonn', N'Food', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (9, N'FFC', N'combo1', 32000, N'comboFFC', N'2 bánh mì kem + 1 hũ xoài', N'Combo', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (10, N'CSG', N'Trà sữa', 20000, N'lytraf.jpg', N'trà sữa trân châu đường  đen', N'Drink', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (11, N'CSG', N'Nước cam', 15000, N'nuoccam.jpg', N'cam ép', N'Drink', 1)
+    INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (12, N'CSG', N'Combo nước', 45000, N'nuoc.jpg', N'2nươc cam + 1tra sữa', N'Combo', 1)
     SET IDENTITY_INSERT [dbo].[Product] OFF
-    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'CSG', 2, N'CLb truy?n thông Cóc Sài G?n', N'Qu?ng bá FPT đ?n v?i m?i ngư?i', N's?nh 2', 1)
-    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FEV', 1, N'CLb to chuc su kien', N'to kien this sk that', N's?nh 1', 1)
-    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FFC', 2, N'clb bóng đá', N'đá bóng đ? ghi th?t nhi?u bàn th?ng', N't?ng 4', 1)
-    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FVC', 1, N'CLb vovinam', N'th? d?c th? thao s?c kh?e là s? 1 ', N't?ng G', 1)
+    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'CSG', 2, N'CLb truyền thông Cóc Sài Gòn', N'Quảng bá FPT đến với mọi người', N'sảnh 2', 1)
+    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FEV', 1, N'CLb to chuc su kien', N'to kien this sk that', N'sảnh 1', 1)
+    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FFC', 2, N'clb bóng đá', N'đá bóng đa ghi thât nhiều bàn thắng', N'tầng 4', 1)
+    INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status]) VALUES (N'FVC', 1, N'CLb vovinam', N'thể dụcc thể thao sức khỏe là số 1 ', N'tầng G', 1)
 ALTER TABLE [dbo].[Account] ADD  DEFAULT ('true') FOR [Status]
     GO
 ALTER TABLE [dbo].[Card] ADD  DEFAULT ((0)) FOR [Balance]
