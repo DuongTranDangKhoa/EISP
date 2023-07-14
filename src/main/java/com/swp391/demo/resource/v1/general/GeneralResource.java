@@ -86,7 +86,7 @@ public class GeneralResource {
             return Response.accepted(x).build();
 
         }
-        return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        return Response.ok(new OrderDTO(0, dto.getShopId(), 0, dto.getBeginDate(), dto.getEndDate(), 0)).build();
 
     }
 

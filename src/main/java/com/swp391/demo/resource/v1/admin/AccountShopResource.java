@@ -37,4 +37,21 @@ public class AccountShopResource {
         }
         return Response.status(Response.Status.NOT_ACCEPTABLE).build();
     }
+    
+    @Path("create")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createAS(AccountShopDTO dto) throws SQLException {
+        
+            boolean i = dao.checkStatusExist(dto.getUsername());
+            if (i) {
+                return Response.status(406, "Account has having relationship with other shop").build();
+            }
+        
+        boolean result = dao.setAcccountShop(dto);
+        if (result) {
+            return Response.status(Response.Status.ACCEPTED).build();
+        }
+        return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    }
 }
