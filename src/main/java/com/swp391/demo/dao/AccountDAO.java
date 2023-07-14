@@ -112,7 +112,7 @@ public class AccountDAO {
                 while(rs.next()){
                     String username = rs.getString("Username");
                     String password = rs.getString("Password");
-                    String name = rs.getNString("Name");
+                    String name = rs.getString("Name");
                     String role = rs.getString("Role");
                     boolean status = rs.getBoolean("Status");
                     AccountDTO dto = new AccountDTO(username, password, name, role, status);
