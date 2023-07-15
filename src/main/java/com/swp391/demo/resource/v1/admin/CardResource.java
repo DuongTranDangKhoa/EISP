@@ -60,6 +60,6 @@ public class CardResource {
             
             return Response.ok(list).build();
         }
-        return Response.status(406, "No card in event").build();
+        return Response.status(200).build();
     }
 }
