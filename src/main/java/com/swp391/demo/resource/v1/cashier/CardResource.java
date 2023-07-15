@@ -27,14 +27,13 @@ public class CardResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateCard(CardDTO dto) throws SQLException {
         boolean pc = dao.checkCardUpdate(dto.getId());
-        if (pc == true) {
-            return Response.status(406, "Card updated before").build();
+        if (pc) {
+            boolean result = dao.UpdateCard(dto);
+            if (result) {
+                return Response.status(Response.Status.ACCEPTED).build();
+            }
         }
-        boolean result = dao.UpdateCard(dto);
-        if (result) {
-            return Response.status(Response.Status.ACCEPTED).build();
-        }
-        return Response.status(406, "Fail to update card").build();
+        return Response.status(406, "Card can not update").build();
     }
 
     @Path("deposite")
