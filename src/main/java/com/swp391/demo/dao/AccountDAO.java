@@ -212,7 +212,7 @@ public class AccountDAO {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Select * from Account " 
-                                + " Where Username != "
+                                + " Where Username NOT IN "
                                 + " (Select Username from AccountShop " 
                                 + " Where Status = 'true')" 
                                 + " And Role = 'Sale'";
