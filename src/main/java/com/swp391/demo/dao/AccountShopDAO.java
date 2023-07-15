@@ -138,7 +138,7 @@ public class AccountShopDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
                     String username = rs.getString("Username");
                     String shopId = rs.getString("ShopId");
                     boolean status = rs.getBoolean("Status");
