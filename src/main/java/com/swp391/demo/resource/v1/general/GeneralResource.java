@@ -6,10 +6,12 @@ package com.swp391.demo.resource.v1.general;
 
 import com.swp391.demo.dao.AccountDAO;
 import com.swp391.demo.dao.CardDAO;
+import com.swp391.demo.dao.ImageEventDAO;
 import com.swp391.demo.dao.OrderDAO;
 import com.swp391.demo.dao.ProductDAO;
 import com.swp391.demo.dto.AccountDTO;
 import com.swp391.demo.dto.CardDTO;
+import com.swp391.demo.dto.ImageEventDTO;
 import com.swp391.demo.dto.OrderDTO;
 import com.swp391.demo.dto.ProductDTO;
 import jakarta.ws.rs.Consumes;
@@ -36,6 +38,7 @@ public class GeneralResource {
     private CardDAO dao1 = CardDAO.getInstance();
     private OrderDAO dao2 = OrderDAO.getInstance();
     private ProductDAO dao3 = ProductDAO.getInstance();
+    private ImageEventDAO dao4 = ImageEventDAO.getInstance();
     private List<ProductDTO> list = new ArrayList<>();
 
     @GET
@@ -97,6 +100,18 @@ public class GeneralResource {
         dao3.getSaleProductShop(shopId);
         List<ProductDTO> list = dao3.getProductSaleList();
 
+        return Response.ok(list).build();
+    }
+    
+    @Path("img/{evntId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getImage(@PathParam("eventId") int id) throws SQLException {
+        dao4.listImage(id);
+        List<ImageEventDTO> list = dao4.getImageList();
+        if (list == null) {
+            return Response.status(200, "Event' image has not exist").build();
+        }
         return Response.ok(list).build();
     }
 }
