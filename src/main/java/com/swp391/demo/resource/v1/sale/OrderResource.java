@@ -103,16 +103,19 @@ public class OrderResource {
         List<ProductDTO> productList = dao2.getAllProductList();
         dao1.viewQuatityProduct(shopId);
         List<OrderDetailDTO> productSoldList = dao1.getListProductSold();
-        List<OrderDetailCheckDTO> list = new ArrayList<>();
-        for (OrderDetailDTO x : productSoldList) {
-            for (ProductDTO i : productList) {
-                if (x.getProductId() == i.getId()) {
-                    OrderDetailCheckDTO dto = new OrderDetailCheckDTO(x.getProductId(), i.getShopId(), i.getName(), i.getImg(), i.getDescription(), i.getCategory(), x.getQuantity());
-                    list.add(dto);
-                    break;
+        if (productSoldList != null) {
+            List<OrderDetailCheckDTO> list = new ArrayList<>();
+            for (OrderDetailDTO x : productSoldList) {
+                for (ProductDTO i : productList) {
+                    if (x.getProductId() == i.getId()) {
+                        OrderDetailCheckDTO dto = new OrderDetailCheckDTO(x.getProductId(), i.getShopId(), i.getName(), i.getImg(), i.getDescription(), i.getCategory(), x.getQuantity());
+                        list.add(dto);
+                        break;
+                    }
                 }
             }
+            return Response.ok(list).build();
         }
-        return Response.ok(list).build();
+        return Response.ok().build();
     }
 }
