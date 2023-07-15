@@ -134,7 +134,7 @@ public class AccountShopDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Select * From AccountShop "
-                        + "  Status  = 'true'";
+                        + "  Where Status  = 'true'";
                 stm = con.prepareStatement(sql);
                 
                 rs = stm.executeQuery();
