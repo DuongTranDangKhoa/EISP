@@ -140,9 +140,9 @@ public class AccountShopDAO implements Serializable {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     String username = rs.getString("Username");
-                    String password = rs.getString("Password");
+                    String shopId = rs.getString("ShopId");
                     boolean status = rs.getBoolean("Status");
-                    AccountShopDTO dto = new AccountShopDTO(username, password, status);
+                    AccountShopDTO dto = new AccountShopDTO(username, shopId, status);
                     if (listAccountShop == null) {
                         listAccountShop = new ArrayList<>();
                     }
