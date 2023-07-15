@@ -38,6 +38,9 @@ public class AccountDAO {
     public List<AccountDTO> getListAccountShopOff() {
         return listAccountShopOff;
     }
+    
+    
+    
 
     private Connection con = DBUtil.makeConnection();
 
@@ -77,7 +80,7 @@ public class AccountDAO {
 
     public void createAccount(AccountDTO dto) throws SQLException {
         PreparedStatement stm = null;
-
+        
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
@@ -91,7 +94,7 @@ public class AccountDAO {
                 stm.execute();
             }
         } finally {
-
+            
             if (stm != null) {
                 stm.close();
             }
@@ -101,8 +104,8 @@ public class AccountDAO {
         }
 
     }
-
-    public void getAllListAccount() throws SQLException {
+    
+    public void getAllListAccount() throws SQLException{
         PreparedStatement stm = null;
         ResultSet rs = null;
         this.listAccount = null;
@@ -112,7 +115,7 @@ public class AccountDAO {
                 String sql = "Select * from Account ";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
-                while (rs.next()) {
+                while(rs.next()){
                     String username = rs.getString("Username");
                     String password = rs.getString("Password");
                     String name = rs.getString("Name");
@@ -137,7 +140,7 @@ public class AccountDAO {
             }
         }
     }
-
+    
     public boolean checkExistAccount(AccountDTO account) throws SQLException {
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -148,7 +151,7 @@ public class AccountDAO {
                 String sql = "Select * from Account "
                         + "Where username = ? ";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, account.getUsername());
+                stm.setString(1, account.getUsername());               
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     result = true;
@@ -167,7 +170,8 @@ public class AccountDAO {
         }
         return result;
     }
-
+    
+    
     public boolean updateAccount(AccountDTO dto) throws SQLException {
         PreparedStatement stm = null;
         boolean result = false;
@@ -188,7 +192,7 @@ public class AccountDAO {
                 }
             }
         } finally {
-
+            
             if (stm != null) {
                 stm.close();
             }
@@ -198,28 +202,33 @@ public class AccountDAO {
         }
         return result;
     }
-
-    public void listAccountNotRelation() throws SQLException {
+    
+    
+    public void listAccountNotRelation() throws SQLException{
         PreparedStatement stm = null;
-        ResultSet rs = null;
+        ResultSet rs = null;  
         listAccountShopOff = null;
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Select Username from Account "
-                        + " Where Username != "
-                        + " (Select Username from AccountShop "
-                        + " Where Status = 'true')"
-                        + " And Role = 'Sale'";
-                stm = con.prepareStatement(sql);
+                String sql = "Select * from Account " 
+                                + " Where Username != "
+                                + " (Select Username from AccountShop " 
+                                + " Where Status = 'true')" 
+                                + " And Role = 'Sale'";
+                stm = con.prepareStatement(sql);                             
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    String username = rs.getString("Username");
-                    AccountDTO dto = new AccountDTO(username, null, null, null, false);
+                  String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    String name = rs.getString("Name");
+                    String role = rs.getString("Role");
+                    boolean status = rs.getBoolean("Status");
+                    AccountDTO dto = new AccountDTO(username, password, name, role, status);
                     if (listAccountShopOff == null) {
                         listAccountShopOff = new ArrayList<>();
                     }
-                    listAccountShopOff.add(dto);
+                    listAccountShopOff.add(dto);  
                 }
             }
         } finally {
@@ -233,6 +242,6 @@ public class AccountDAO {
                 con.close();
             }
         }
-
+        
     }
 }
