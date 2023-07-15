@@ -61,7 +61,7 @@ public class AccountResource {
             dao1.setAcccountShop(dto);
             return Response.status(Response.Status.CREATED).build();
         }
-        return Response.status(406, "Account has existed").build();
+        return Response.status(406).build();
     }
 
     @Path("update")
@@ -76,5 +76,17 @@ public class AccountResource {
             return Response.ok(dto).build();
         }
         return Response.status(406, "Fail to update Account").build();
+    }
+    
+    @Path("notRelation")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listAccountNotRelation() throws SQLException{
+        dao.listAccountNotRelation();
+        List<AccountDTO> list = dao.getListAccountShopOff();
+        if (list == null) {
+            return Response.ok(200).build();
+        }
+        return Response.ok(list).build();
     }
 }

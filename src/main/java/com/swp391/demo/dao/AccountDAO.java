@@ -21,6 +21,7 @@ public class AccountDAO {
 
     private static AccountDAO instance;
     private List<AccountDTO> listAccount;
+    private List<AccountDTO> listAccountShopOff;
 
     public static AccountDAO getInstance() {
 
@@ -33,6 +34,11 @@ public class AccountDAO {
     public List<AccountDTO> getListAccount() {
         return listAccount;
     }
+
+    public List<AccountDTO> getListAccountShopOff() {
+        return listAccountShopOff;
+    }
+    
     
     
 
@@ -142,7 +148,7 @@ public class AccountDAO {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Select * from account "
+                String sql = "Select * from Account "
                         + "Where username = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, account.getUsername());               
@@ -197,4 +203,45 @@ public class AccountDAO {
         return result;
     }
     
+    
+    public void listAccountNotRelation() throws SQLException{
+        PreparedStatement stm = null;
+        ResultSet rs = null;  
+        listAccountShopOff = null;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select * from Account " 
+                                + " Where Not Username = "
+                                + " (Select Username from AccountShop " 
+                                + " Where Status = 'true')" 
+                                + " And Role = 'Sale'";
+                stm = con.prepareStatement(sql);                             
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                  String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    String name = rs.getString("Name");
+                    String role = rs.getString("Role");
+                    boolean status = rs.getBoolean("Status");
+                    AccountDTO dto = new AccountDTO(username, password, name, role, status);
+                    if (listAccountShopOff == null) {
+                        listAccountShopOff = new ArrayList<>();
+                    }
+                    listAccountShopOff.add(dto);  
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        
+    }
 }
