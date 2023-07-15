@@ -206,7 +206,7 @@ public class AccountDAO {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Select * from Account "
+                String sql = "Select Username from Account "
                         + " Where Username != "
                         + " (Select Username from AccountShop "
                         + " Where Status = 'true')"
