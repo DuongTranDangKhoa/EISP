@@ -61,7 +61,7 @@ public class GeneralResource {
     public Response checkLogin(AccountDTO dto) throws SQLException, URISyntaxException {
         AccountDTO x = dao.checkLogin(dto);
         if (x == null) {
-            return Response.status(406,"Username or password wrong").build();
+            return Response.status(200).build();
         }
         return Response.accepted(x).build();
     }
@@ -103,7 +103,7 @@ public class GeneralResource {
         return Response.ok(list).build();
     }
     
-    @Path("img/{evntId}")
+    @Path("img/{eventId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getImage(@PathParam("eventId") int id) throws SQLException {
