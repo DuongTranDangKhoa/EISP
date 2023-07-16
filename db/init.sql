@@ -1,4 +1,10 @@
-﻿USE [EIPS]
+USE [master]
+go
+	DROP DATABASE [EIPS]
+go	
+	CREATE DATABASE [EIPS]
+go
+	USE [EIPS]
 GO
 /****** Object:  Table [dbo].[Account]    Script Date: 7/14/2023 7:13:55 PM ******/
 SET ANSI_NULLS ON
