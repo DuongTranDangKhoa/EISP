@@ -44,7 +44,7 @@ public class EventResource {
         dao.getAllEvent();
         List<EventDTO> list = dao.getListEvent();
         if (list.isEmpty()) {
-            return Response.status(406, "No Event in Project").build();
+            return Response.status(200).build();
 
         }
         

@@ -61,7 +61,7 @@ public class GeneralResource {
     public Response checkLogin(AccountDTO dto) throws SQLException, URISyntaxException {
         AccountDTO x = dao.checkLogin(dto);
         if (x == null) {
-            return Response.status(200).build();
+            return Response.status(500).build();
         }
         return Response.accepted(x).build();
     }
@@ -74,7 +74,7 @@ public class GeneralResource {
         CardDTO x = dao1.getInfoCard(dto.getId());
 
         if (x == null) {
-            return Response.status(406,"Card has not exist").build();
+            return Response.status(200," ").build();
         }
         return Response.accepted(x).build();
     }
