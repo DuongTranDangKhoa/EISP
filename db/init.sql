@@ -212,27 +212,13 @@ INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES
 INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user1', N'12345', N'u1', N'sale', 1)
 INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user2', N'12345', N'u2', N'sale', 1)
 INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user3', N'12345', N'u3', N'sale', 1)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user34', N'12345', N'khoane', N'sale', 1)
 INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user4', N'12345', N'khoa', N'cashier', 1)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user5', N'12345', N'u4', N'sale', 1)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user7', N'12345', N'u7', N'sale', 1)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status]) VALUES (N'user8', N'12345', N'u8', N'sale', 1)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user1', N'FEV', 1)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user2', N'FFC', 0)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user3', N'FVC', 0)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user5', N'CSG', 0)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user7', N'FEV', 0)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user8', N'CSG', 0)
-INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user8', N'FEV', NULL)
-SET IDENTITY_INSERT [dbo].[Card] ON 
 
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (1, 2, 8625000, N'Khoane1', N'0909090909', 1)
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (2, 2, 100000, N'hieut2', N'0987654321', 1)
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (3, 3, 0, NULL, NULL, 1)
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (4, 3, 0, NULL, NULL, 1)
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (5, 3, 0, NULL, NULL, 1)
-INSERT [dbo].[Card] ([Id], [EventId], [Balance], [Username], [PhoneNumber], [Status]) VALUES (1003, 1, 0, NULL, NULL, 1)
-SET IDENTITY_INSERT [dbo].[Card] OFF
+INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user1', N'FEV', 1)
+INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user2', N'FFC', 1)
+INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user3', N'FVC', 1)
+
+
 SET IDENTITY_INSERT [dbo].[Combo] ON 
 
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1, 3, 1, 2)
@@ -333,6 +319,8 @@ GO
 ALTER TABLE [dbo].[Product] ADD  DEFAULT ('true') FOR [Status]
 GO
 ALTER TABLE [dbo].[Shop] ADD  DEFAULT ('true') FOR [Status]
+Go
+ALTER TABLE [dbo].[AccountShop] ADD DEFAULT ('true') FOR [Status]
 GO
 ALTER TABLE [dbo].[AccountShop]  WITH CHECK ADD  CONSTRAINT [FKAccountSho285522] FOREIGN KEY([ShopId])
 REFERENCES [dbo].[Shop] ([Id])
