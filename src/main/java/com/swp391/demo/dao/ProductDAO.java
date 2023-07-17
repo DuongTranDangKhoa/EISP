@@ -4,7 +4,6 @@
  */
 package com.swp391.demo.dao;
 
-import com.swp391.demo.dto.AccountShopDTO;
 import com.swp391.demo.dto.ProductComboDTO;
 import com.swp391.demo.dto.ProductDTO;
 import com.swp391.demo.util.DBUtil;

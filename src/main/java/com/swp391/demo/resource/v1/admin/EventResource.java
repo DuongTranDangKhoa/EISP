@@ -28,13 +28,15 @@ public class EventResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createEvent(EventDTO dto) throws SQLException {
+        if (dto.getBeginDate().after(dto.getEndDate())) {
+            return Response.ok(new Error("Date not vaild")).build();
+        }
         boolean result = dao.createEvent(dto);
         if (result) {
             return Response.status(Response.Status.CREATED).build();
 
         }
         return Response.status(406, "Event can not create").build();
-
     }
 
     @GET
@@ -45,17 +47,17 @@ public class EventResource {
         List<EventDTO> list = dao.getListEvent();
         if (list.isEmpty()) {
             return Response.status(200).build();
-
         }
-        
         return Response.ok(list).build();
-
     }
 
     @Path("update")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateEvent(EventDTO dto) throws SQLException {
+        if (dto.getBeginDate().after(dto.getEndDate())) {
+            return Response.ok(new Error("Date not vaild")).build();
+        }
         boolean result = dao.updateEvent(dto);
         if (result) {
             return Response.status(Response.Status.ACCEPTED).build();

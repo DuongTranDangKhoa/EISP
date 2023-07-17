@@ -7,14 +7,11 @@ package com.swp391.demo.resource.v1.sale;
 import com.swp391.demo.dao.ComboDAO;
 import com.swp391.demo.dao.ProductDAO;
 import com.swp391.demo.dto.AccountShopDTO;
-import com.swp391.demo.dto.ComboDTO;
-import com.swp391.demo.dto.OrderCheckDTO;
 import com.swp391.demo.dto.ProductComboDTO;
 import com.swp391.demo.dto.ProductDTO;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -41,7 +38,6 @@ public class ProductResource {
     public Response showAllProduct(AccountShopDTO dto) throws SQLException {
         dao.getAllProductShop(dto.getShopId());
         List<ProductDTO> list = dao.getAllProductList();
-
         return Response.ok(list).build();
     }
 
