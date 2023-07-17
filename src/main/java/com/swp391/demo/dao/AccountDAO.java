@@ -55,10 +55,11 @@ public class AccountDAO {
                 stm.setString(2, account.getPassword());
                 rs = stm.executeQuery();
                 if (rs.next()) {
+                    String image = rs.getString("Image");
                     String name = rs.getString("Name");
                     String role = rs.getString("Role");
                     Boolean status = rs.getBoolean("Status");
-                    dto = new AccountDTO(account.getUsername(), account.getPassword(), name, role, status);
+                    dto = new AccountDTO(account.getUsername(), account.getPassword(), image, name, role, status);
                 }
             }
         } finally {
@@ -81,13 +82,14 @@ public class AccountDAO {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Insert into Account(Username, Password, Name, Role) "
-                        + " values(?,?,?,?)";
+                String sql = "Insert into Account(Username, Password, Image, Name, Role) "
+                        + " values(?,?,?,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getUsername());
                 stm.setString(2, dto.getPassword());
-                stm.setNString(3, dto.getName());
-                stm.setString(4, dto.getRole());
+                stm.setString(3, dto.getImage());
+                stm.setNString(4, dto.getName());
+                stm.setString(5, dto.getRole());
                 stm.execute();
             }
         } finally {
@@ -115,10 +117,11 @@ public class AccountDAO {
                 while (rs.next()) {
                     String username = rs.getString("Username");
                     String password = rs.getString("Password");
+                    String image = rs.getString("Image");
                     String name = rs.getString("Name");
                     String role = rs.getString("Role");
                     boolean status = rs.getBoolean("Status");
-                    AccountDTO dto = new AccountDTO(username, password, name, role, status);
+                    AccountDTO dto = new AccountDTO(username, password, image, name, role, status);
                     if (listAccount == null) {
                         listAccount = new ArrayList<>();
                     }
@@ -175,13 +178,14 @@ public class AccountDAO {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Update Account "
-                        + " Set Password = ?, Name = ?, Status = ? "
+                        + " Set Password = ?, Image = ?, Name = ?, Status = ? "
                         + " Where Username = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getPassword());
-                stm.setNString(2, dto.getName());
-                stm.setBoolean(3, dto.isStatus());
-                stm.setString(4, dto.getUsername());
+                stm.setString(2, dto.getImage());
+                stm.setNString(3, dto.getName());
+                stm.setBoolean(4, dto.isStatus());
+                stm.setString(5, dto.getUsername());
                 int i = stm.executeUpdate();
                 if (i > 0) {
                     result = true;
@@ -215,8 +219,8 @@ public class AccountDAO {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String username = rs.getString("Username");
-                    
-                    AccountDTO dto = new AccountDTO(username, null, null, null, false);
+
+                    AccountDTO dto = new AccountDTO(username, null, null, null, null, false);
                     if (listAccountShopOff == null) {
                         listAccountShopOff = new ArrayList<>();
                     }

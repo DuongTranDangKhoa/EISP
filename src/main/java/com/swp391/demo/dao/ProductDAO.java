@@ -26,7 +26,6 @@ public class ProductDAO implements Serializable {
     private List<ProductDTO> productAllList;
     private List<ProductDTO> productSaleList;
     private List<ProductDTO> productList;
-    
 
     private static ProductDAO instance;
 
@@ -239,8 +238,8 @@ public class ProductDAO implements Serializable {
         }
         return result;
     }
-    
-       public boolean creatProduct(ProductComboDTO dto) throws SQLException {
+
+    public boolean creatProduct(ProductComboDTO dto) throws SQLException {
         PreparedStatement stm = null;
         boolean result = false;
         try {
@@ -270,8 +269,8 @@ public class ProductDAO implements Serializable {
         }
         return result;
     }
-       
-        public void getProductShop(String idShop) throws SQLException {
+
+    public void getProductShop(String idShop) throws SQLException {
         PreparedStatement stm = null;
         ResultSet rs = null;
         this.productList = null;
@@ -281,7 +280,7 @@ public class ProductDAO implements Serializable {
                 String sql = "Select Id, ShopId, Name, Price, Image, Description, CategoryId, Status "
                         + "     from Product  "
                         + "	where  ShopId = ?";
-                       	
+
                 stm = con.prepareStatement(sql);
                 stm.setString(1, idShop);
                 rs = stm.executeQuery();
@@ -318,26 +317,26 @@ public class ProductDAO implements Serializable {
         }
 
     }
-        
-     public double getPrice(int key) throws SQLException{
-         PreparedStatement stm = null;
-         ResultSet rs = null;
-         double price = 0;
-         try {
-             con = DBUtil.makeConnection();
-             if (con != null) {
-                 String sql ="Select Price "
-                         + " From Product "
-                         + " Where Id = ?";
-                 stm = con.prepareStatement(sql);
-                 stm.setInt(1, key);
-                 rs = stm.executeQuery();
-                 if (rs.next()) {
-                     price = rs.getDouble("Price");
-                 }
-             }
-         } finally {
-             if (rs != null) {
+
+    public double getPrice(int key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        double price = 0;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select Price "
+                        + " From Product "
+                        + " Where Id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    price = rs.getDouble("Price");
+                }
+            }
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
             if (stm != null) {
@@ -346,7 +345,7 @@ public class ProductDAO implements Serializable {
             if (con != null) {
                 con.close();
             }
-         }
-         return price;
-     }   
+        }
+        return price;
+    }
 }

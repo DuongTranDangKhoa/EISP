@@ -41,18 +41,6 @@ public class GeneralResource {
     private ImageEventDAO dao4 = ImageEventDAO.getInstance();
     private List<ProductDTO> list = new ArrayList<>();
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBook() {
-        AccountDTO dto = new AccountDTO("123", "123", "toi hom qua", "sales", true);
-        try {
-            return Response.ok(dto).build();
-        } catch (Exception e) {
-            System.out.println("error" + e.getMessage());
-        }
-        return Response.ok(dto).build();
-
-    }
 
     @Path("login")
     @POST

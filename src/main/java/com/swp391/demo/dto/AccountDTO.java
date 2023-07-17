@@ -24,6 +24,7 @@ import lombok.ToString;
 public class AccountDTO implements Serializable{
     private String username;
     private String password;
+    private String image;
     private String name;
     private String role;
     private boolean status;

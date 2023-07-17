@@ -23,6 +23,7 @@ import lombok.ToString;
 public class ShopDTO implements Serializable{
     private String id;
     private int eventId;
+    private String image;
     private String name;
     private String des;
     private String area;

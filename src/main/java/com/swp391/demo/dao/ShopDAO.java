@@ -72,14 +72,15 @@ public class ShopDAO implements Serializable {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Insert into Shop(Id, EventId, Name, Description,Area) "
+                String sql = "Insert into Shop(Id, EventId, Image, Name, Description,Area) "
                         + " Values(?,?,?,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getId());
                 stm.setInt(2, dto.getEventId());
-                stm.setNString(3, dto.getName());
-                stm.setNString(4, dto.getDes());
-                stm.setString(5, dto.getArea());
+                stm.setString(3, dto.getImage());
+                stm.setNString(4, dto.getName());
+                stm.setNString(5, dto.getDes());
+                stm.setString(6, dto.getArea());
                 stm.execute();
             }
         } finally {
@@ -107,11 +108,12 @@ public class ShopDAO implements Serializable {
                 while (rs.next()) {
                     String id = rs.getString("Id");
                     int eventId = rs.getInt("EventId");
+                    String image = rs.getString("Image");
                     String name = rs.getNString("Name");
                     String description = rs.getNString("Description");
                     String area = rs.getString("Area");
                     Boolean status = rs.getBoolean("Status");
-                    ShopDTO dto = new ShopDTO(id, eventId, name, description, area, status);
+                    ShopDTO dto = new ShopDTO(id, eventId, image, name, description, area, status);
                     if (this.shopList == null) {
                         this.shopList = new ArrayList<>();
                     }
@@ -139,16 +141,17 @@ public class ShopDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Update Shop"
-                        + " Set  EventId = ?, Name = ?, Description = ?, Area = ?, Status = ? "
+                        + " Set  EventId = ?, Image = ?, Name = ?, Description = ?, Area = ?, Status = ? "
                         + " Where Id = ?";
 
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, dto.getEventId());
-                stm.setNString(2, dto.getName());
-                stm.setNString(3, dto.getDes());
-                stm.setNString(4, dto.getArea());
-                stm.setBoolean(5, dto.isStatus());
-                stm.setString(6, dto.getId());
+                stm.setString(2, dto.getImage());
+                stm.setNString(3, dto.getName());
+                stm.setNString(4, dto.getDes());
+                stm.setNString(5, dto.getArea());
+                stm.setBoolean(6, dto.isStatus());
+                stm.setString(7, dto.getId());
                 int i = stm.executeUpdate();
                 if (i > 0) {
                     result = true;
@@ -182,11 +185,12 @@ public class ShopDAO implements Serializable {
                 if (rs.next()) {
                     String id = rs.getString("Id");
                     int eventId = rs.getInt("EventId");
+                    String image = rs.getString("Image");
                     String name = rs.getNString("Name");
                     String des = rs.getNString("Description");
                     String area = rs.getString("Area");
                     Boolean status = rs.getBoolean("Status");
-                    dto = new ShopDTO(id, eventId, name, des, area, status);
+                    dto = new ShopDTO(id, eventId, image, name, des, area, status);
 
                 }
             }

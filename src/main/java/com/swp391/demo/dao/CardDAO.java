@@ -159,14 +159,13 @@ public class CardDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Update Card "
-                        + " Set Username = ?, Balance = ?, PhoneNumber = ?, Status = ?"
+                        + " Set Username = ?, Balance = ?, PhoneNumber = ?, Status = 'false'"
                         + " Where Id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, dto.getUsername());
                 stm.setDouble(2, dto.getBalance());
                 stm.setString(3, dto.getPhoneNumber());
-                stm.setBoolean(4, dto.isStatus());
-                stm.setInt(5, dto.getId());
+                stm.setInt(4, dto.getId());
                 int x = stm.executeUpdate();
                 if (x > 0) {
                     result = true;
