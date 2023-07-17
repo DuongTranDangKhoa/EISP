@@ -175,7 +175,7 @@ public class ShopDAO implements Serializable {
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = " Select s.Id, s.EventId, s.Name, s.Description, s.Area, s.Status From Shop s, AccountShop ass "
+                String sql = " Select s.Id, s.EventId, s.Image, s.Name, s.Description, s.Area, s.Status From Shop s, AccountShop ass "
                         + "    Where s.Id = ass.ShopID "
                         + "    and ass.Username = ? "
                         + "    and ass.Status = 'true'";
