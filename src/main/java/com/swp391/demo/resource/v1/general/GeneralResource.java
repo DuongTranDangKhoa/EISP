@@ -11,6 +11,7 @@ import com.swp391.demo.dao.OrderDAO;
 import com.swp391.demo.dao.ProductDAO;
 import com.swp391.demo.dto.AccountDTO;
 import com.swp391.demo.dto.CardDTO;
+import com.swp391.demo.dto.ErrorDTO;
 import com.swp391.demo.dto.ImageEventDTO;
 import com.swp391.demo.dto.OrderDTO;
 import com.swp391.demo.dto.ProductDTO;
@@ -102,4 +103,17 @@ public class GeneralResource {
         }
         return Response.ok(list).build();
     }
+    
+    @Path("order/{shopId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListOrder(@PathParam("shopId") String id) throws SQLException{
+        dao2.listOrderInShop(id);
+        List<OrderDTO> list = dao2.getListOrder();
+        if (list == null) {
+            return Response.ok(new ErrorDTO("No Order has existed")).build();
+        }
+        return Response.ok(list).build();
+    }
+            
 }

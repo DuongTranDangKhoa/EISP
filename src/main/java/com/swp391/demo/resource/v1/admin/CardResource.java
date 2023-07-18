@@ -30,7 +30,8 @@ public class CardResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createCard(CardDTO dto) throws SQLException {
-        boolean result = dao.CreateCard(dto);
+        int idCheck = dao.checkCardId();
+        boolean result = dao.CreateCard(dto, idCheck);
         if (result == true) {
             return Response.status(Response.Status.CREATED).build();
         }
@@ -42,7 +43,8 @@ public class CardResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create50Card(CardDTO dto) throws SQLException {
         for (int i = 0; i < 50; i++) {
-            boolean result = dao.CreateCard(dto);
+            int idCheck = dao.checkCardId();
+            boolean result = dao.CreateCard(dto, idCheck);
             if (result == false) {
                 return Response.status(406,"Fail to Create Create Card").build();
             }

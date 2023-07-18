@@ -35,16 +35,17 @@ public class CardDAO implements Serializable {
         return listCard;
     }
 
-    public Boolean CreateCard(CardDTO dto) throws SQLException {
+    public Boolean CreateCard(CardDTO dto, int id) throws SQLException {
         PreparedStatement stm = null;
         boolean result = false;
         try {
             con = DBUtil.makeConnection();
             if (con != null) {
-                String sql = "Insert into Card(EventId) "
-                        + "Values (?)";
+                String sql = "Insert into Card(EventId, Id) "
+                        + "Values (?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, dto.getEventId());
+                stm.setInt(2, id);
                 int x = stm.executeUpdate();
                 if (x != 0) {
                     result = true;
@@ -293,5 +294,41 @@ public class CardDAO implements Serializable {
             }
         }
         return result;
+    }
+    
+     public int checkCardId() throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        int id = 0;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select Id "
+                        + " From [Card] "
+                        + " Where Id = ?";
+                do {
+                    stm = con.prepareStatement(sql);
+                    id = (int) (Math.random() * 1000000);
+                    stm.setInt(1, id);
+                    rs = stm.executeQuery();
+                    if (rs.next() == false) {
+                        break;
+                    }
+
+                } while (true);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return id;
     }
 }

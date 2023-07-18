@@ -9,6 +9,7 @@ import com.swp391.demo.dto.OrderDTO;
 import com.swp391.demo.util.DBUtil;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class OrderDAO implements Serializable {
 
     private Connection con = DBUtil.makeConnection();
     private static OrderDAO instance;
-    private List<OrderDTO> listRevenue;
+    private List<OrderDTO> listOrder;
 
     public static OrderDAO getInstance() {
         if (instance == null) {
@@ -32,8 +33,8 @@ public class OrderDAO implements Serializable {
         return instance;
     }
 
-    public List<OrderDTO> getListRevenue() {
-        return listRevenue;
+    public List<OrderDTO> getListOrder() {
+        return listOrder;
     }
 
     public int checkOrderId() throws SQLException {
@@ -116,17 +117,17 @@ public class OrderDAO implements Serializable {
                         + " and Date  between ? and ? "
                         + " Group by ShopID";
                 stm = con.prepareStatement(sql);
-                
-                    stm.setString(1, dto.getShopId());
-                    stm.setString(2, begin);
-                    stm.setString(3, end);
-                    rs = stm.executeQuery();
-                    if (rs.next()) {
-                        String shopId = rs.getString("ShopId");
-                        Double revenue = rs.getDouble("Revenue");
-                        result = new OrderDTO(0, shopId, 0, dto.getBeginDate(), dto.getEndDate(), revenue);                       
-                     
-                    }
+
+                stm.setString(1, dto.getShopId());
+                stm.setString(2, begin);
+                stm.setString(3, end);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String shopId = rs.getString("ShopId");
+                    Double revenue = rs.getDouble("Revenue");
+                    result = new OrderDTO(0, shopId, 0, dto.getBeginDate(), dto.getEndDate(), revenue);
+
+                }
             }
         } finally {
             if (rs != null) {
@@ -140,5 +141,46 @@ public class OrderDAO implements Serializable {
             }
         }
         return result;
+    }
+
+    public void listOrderInShop(String key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        listOrder = null;
+
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select * From [Order] "
+                        + " Where ShopId = ? "
+                        + " and Date  between ? and ? "
+                        + " Group by ShopID";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, key);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("Id");
+                    String shopId = rs.getString("ShopId");
+                    int cardId = rs.getInt("CardId");
+                    Date date = rs.getDate("Date");
+                    Double total = rs.getDouble("Total");
+                    OrderDTO dto = new OrderDTO(id, shopId, cardId, date, null, total);
+                    if (listOrder == null) {
+                        listOrder = new ArrayList<>();
+                    }
+                    listOrder.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }
