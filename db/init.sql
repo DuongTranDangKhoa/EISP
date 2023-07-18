@@ -49,7 +49,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Card](
 	[NO] [int] IDENTITY(1,1) NOT NULL,
-	[ID] [int] NULL,
+	[ID] [int] NOT NULL,
 	[EventId] [int] NOT NULL,
 	[Balance] [real] NULL,
 	[Username] [varchar](500) NULL,
