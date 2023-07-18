@@ -6,7 +6,7 @@ go
 go
 USE [EIPS]
 GO
-/****** Object:  Table [dbo].[Account]    Script Date: 7/17/2023 10:07:01 PM ******/
+/****** Object:  Table [dbo].[Account]    Script Date: 7/18/2023 9:43:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -25,7 +25,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AccountShop]    Script Date: 7/17/2023 10:07:02 PM ******/
+/****** Object:  Table [dbo].[AccountShop]    Script Date: 7/18/2023 9:43:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -42,18 +42,20 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Card]    Script Date: 7/17/2023 10:07:02 PM ******/
+/****** Object:  Table [dbo].[Card]    Script Date: 7/18/2023 9:43:08 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Card](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NO] [int] IDENTITY(1,1) NOT NULL,
+	[ID] [int] NOT NULL,
 	[EventId] [int] NOT NULL,
 	[Balance] [real] NULL,
 	[Username] [varchar](500) NULL,
 	[PhoneNumber] [varchar](10) NULL,
 	[Status] [bit] NULL,
+	
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -61,7 +63,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Combo]    Script Date: 7/17/2023 10:07:02 PM ******/
+/****** Object:  Table [dbo].[Combo]    Script Date: 7/18/2023 9:43:09 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -78,7 +80,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Event]    Script Date: 7/17/2023 10:07:03 PM ******/
+/****** Object:  Table [dbo].[Event]    Script Date: 7/18/2023 9:43:09 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +102,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ImageEvent]    Script Date: 7/17/2023 10:07:03 PM ******/
+/****** Object:  Table [dbo].[ImageEvent]    Script Date: 7/18/2023 9:43:09 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -116,19 +118,18 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Order]    Script Date: 7/17/2023 10:07:03 PM ******/
+/****** Object:  Table [dbo].[Order]    Script Date: 7/18/2023 9:43:09 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Order](
-    [No] [int] IDENTITY(1,1) NOT NULL,
+	[No] [int] IDENTITY(1,1) NOT NULL,
 	[Id] [int] NOT NULL,
 	[Date] [datetime] NULL,
 	[ShopId] [varchar](100) NULL,
 	[CardId] [int] NULL,
 	[Total] [real] NULL,
-	
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -136,7 +137,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[OrderDetail]    Script Date: 7/17/2023 10:07:04 PM ******/
+/****** Object:  Table [dbo].[OrderDetail]    Script Date: 7/18/2023 9:43:10 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +156,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 7/17/2023 10:07:04 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 7/18/2023 9:43:10 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +177,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Shop]    Script Date: 7/17/2023 10:07:05 PM ******/
+/****** Object:  Table [dbo].[Shop]    Script Date: 7/18/2023 9:43:10 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -196,7 +197,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Transaction]    Script Date: 7/17/2023 10:07:05 PM ******/
+/****** Object:  Table [dbo].[Transaction]    Script Date: 7/18/2023 9:43:10 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -212,14 +213,17 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status], [Image]) VALUES (N'admin', N'12345', N'truong', N'admin', 1, NULL)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status], [Image]) VALUES (N'user1', N'12345', N'u1', N'sale', 1, NULL)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status], [Image]) VALUES (N'user2', N'12345', N'Khoa', N'sale', 1, NULL)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status], [Image]) VALUES (N'user3', N'12345', N'u3', N'sale', 1, NULL)
-INSERT [dbo].[Account] ([Username], [Password], [Name], [Role], [Status], [Image]) VALUES (N'user4', N'12345', N'khoa', N'cashier', 1, NULL)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'admin', N'12345', NULL, N'truong', N'admin', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'khoa', N'12345', N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FAVT.png?alt=media&token=727ace91-ae85-430c-8eb7-229f1818c14c', N'vdk123', N'admin', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'user1', N'12345', NULL, N'u1', N'sale', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'user2', N'12345', N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F339135711_321858083623623_6668565926008596782_n.jpg?alt=media&token=c4d94517-a656-4211-940e-846998d08b2c', N'khoadang', N'sale', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'user3', N'12345', NULL, N'u3', N'sale', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'user4', N'12345', NULL, N'khoa', N'cashier', 1)
+INSERT [dbo].[Account] ([Username], [Password], [Image], [Name], [Role], [Status]) VALUES (N'user5', N'12345', NULL, N'KV', N'sale', 1)
 INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user1', N'FEV', 1)
 INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user2', N'FFC', 1)
 INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user3', N'FVC', 1)
+INSERT [dbo].[AccountShop] ([Username], [ShopId], [Status]) VALUES (N'user5', N'ESCNE', 0)
 
 SET IDENTITY_INSERT [dbo].[Combo] ON 
 
@@ -227,8 +231,6 @@ INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1, 3, 1, 2)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (2, 3, 2, 1)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (3, 6, 4, 2)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (4, 6, 5, 2)
-INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (5, 9, 7, 2)
-INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (6, 9, 8, 1)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (7, 12, 10, 1)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (8, 12, 11, 2)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (9, 16, 2, 3)
@@ -241,18 +243,17 @@ INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1009, 1014, 1, 1
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1010, 1014, 2, 7)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1011, 1014, 13, 3)
 INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1012, 1014, 14, 3)
-INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1013, 1019, 1018, 1)
-INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1014, 1019, 7, 1)
+INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1015, 1022, 1018, 2)
+INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1016, 1022, 7, 2)
+INSERT [dbo].[Combo] ([No], [Id], [IdMake], [Quantity]) VALUES (1017, 1022, 1021, 1)
 SET IDENTITY_INSERT [dbo].[Combo] OFF
 SET IDENTITY_INSERT [dbo].[Event] ON 
 
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1, N'Hội xuân .....', N'hooi xuan lang lordaaaaa', CAST(N'2023-01-10' AS Date), CAST(N'2023-01-16' AS Date), N'FPT', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F351996642_984933112940699_787881922217360425_n.jpg?alt=media&token=e0908d88-1201-4e86-a55e-9a726d4a3bb9')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (2, N'Back To School', N'Back to school 2020=2023', CAST(N'2023-02-10' AS Date), CAST(N'2023-02-17' AS Date), N'FPT', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F274236323_2183203198503105_1668495611203064023_n.jpg?alt=media&token=75364a8c-2dfd-4b7e-a4a1-4cf9a745adb1')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (3, N'Trại hè nè', N'hahahahahaha', CAST(N'2023-07-21' AS Date), CAST(N'2023-07-26' AS Date), N'FPT Q9 ha', N'user5', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F6.jfif?alt=media&token=a3bd32d1-a5dc-452f-b8f2-cfc5889beebd')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1003, N'Trại Xuân', N'hahahahaha', CAST(N'2023-07-26' AS Date), CAST(N'2023-07-30' AS Date), N'FPT Q9 ha', N'admin', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F4.png?alt=media&token=41e77fa2-5fb6-4f46-8314-8b4cd819a566')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1004, N'Trại Xuân nè ', N'hahahahaha', CAST(N'2023-07-26' AS Date), CAST(N'2023-07-30' AS Date), N'FPT Q9 ha', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F6.jfif?alt=media&token=1bf038ef-3f3b-4a69-97af-683af4f1e0d8')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1005, N'Campus Tour', N'Sự kiện chào đón học sinh các trường trung học phổ thông trong TP. Hồ Chí Minh', CAST(N'2022-03-04' AS Date), CAST(N'2022-04-03' AS Date), N'FPT', N'admin', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F277782979_2218092158347542_5720904062507112913_n.jpg?alt=media&token=062c471a-d8ad-433f-b4fe-dbdbe3dffac5')
-INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1006, N'FPT Event', N'aaaaa', CAST(N'2023-07-11' AS Date), CAST(N'2023-07-14' AS Date), N'FPT', N'admin', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F277369016_2218092585014166_8288023646475517072_n.jpg?alt=media&token=289e38b2-2eaa-4a3f-ae80-f99c992c558b')
+INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1, N'Hội xuân Làng Cóc', N'Hội Xuân Làng Cóc', CAST(N'2023-07-20' AS Date), CAST(N'2023-07-22' AS Date), N'FPT', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F324088349_906487807190365_1822405884823009665_n.jpg?alt=media&token=4e54825f-3f76-44c9-ae3f-c6284049261c')
+INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (2, N'Back2School', N'Sinh Viên trở lại trường học', CAST(N'2023-09-05' AS Date), CAST(N'2023-09-06' AS Date), N'FPT', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F154786800_3549487075174259_2573061176000509919_n.jpg?alt=media&token=1ed8232c-0aab-41fc-9599-a4c61d46ff54')
+INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (3, N'Xuân Ấm Áp', N'Phát quà từ thiện', CAST(N'2024-02-10' AS Date), CAST(N'2024-02-24' AS Date), N'FPT Q9 ha', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F135224036_3400697020053266_8902511975498351834_n.png?alt=media&token=40e05b34-281f-4091-b25b-a5322314176d')
+INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1003, N'Ngày Hội Ẩm Thực', N'Giao lưu văn hóa ẩm thực', CAST(N'2023-07-26' AS Date), CAST(N'2023-07-30' AS Date), N'FPT Q9 ha', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F324151952_609396470908269_3591530088654048587_n.jpg?alt=media&token=5281a718-0d73-43af-90eb-b7b1c94c594b')
+INSERT [dbo].[Event] ([ID], [Name], [Description], [BeginDate], [EndDate], [Area], [Username], [Status], [Image]) VALUES (1005, N'Campus Tour', N'Chào đón học sinh tham quan', CAST(N'2023-08-15' AS Date), CAST(N'2023-08-19' AS Date), N'FPT', N'admin', 0, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F277782979_2218092158347542_5720904062507112913_n.jpg?alt=media&token=062c471a-d8ad-433f-b4fe-dbdbe3dffac5')
 SET IDENTITY_INSERT [dbo].[Event] OFF
 SET IDENTITY_INSERT [dbo].[ImageEvent] ON 
 
@@ -262,7 +263,19 @@ INSERT [dbo].[ImageEvent] ([No], [EventId], [Image]) VALUES (3, 1, N'https://sco
 INSERT [dbo].[ImageEvent] ([No], [EventId], [Image]) VALUES (4, 1, N'https://scontent.fsgn17-1.fna.fbcdn.net/v/t39.30808-6/324270488_3435578490021254_1109975506766971237_n.jpg?_nc_cat=111&cb=99be929b-59f725be&ccb=1-7&_nc_sid=0debeb&_nc_ohc=y2hGXFO3JfcAX_rqy7D&_nc_ht=scontent.fsgn17-1.fna&oh=00_AfDlIYwsru5uZy_p9xC403XpsSpnge30C-pC6SJjthx5Xw&oe=64B7B743')
 INSERT [dbo].[ImageEvent] ([No], [EventId], [Image]) VALUES (5, 1, N'https://scontent.fsgn17-1.fna.fbcdn.net/v/t39.30808-6/324270488_3435578490021254_1109975506766971237_n.jpg?_nc_cat=111&cb=99be929b-59f725be&ccb=1-7&_nc_sid=0debeb&_nc_ohc=y2hGXFO3JfcAX_rqy7D&_nc_ht=scontent.fsgn17-1.fna&oh=00_AfDlIYwsru5uZy_p9xC403XpsSpnge30C-pC6SJjthx5Xw&oe=64B7B743')
 SET IDENTITY_INSERT [dbo].[ImageEvent] OFF
+SET IDENTITY_INSERT [dbo].[Order] ON 
 
+INSERT [dbo].[Order] ([No], [Id], [Date], [ShopId], [CardId], [Total]) VALUES (1, 361406, CAST(N'2023-07-18T04:34:34.700' AS DateTime), N'FFC', 1, 153000)
+SET IDENTITY_INSERT [dbo].[Order] OFF
+SET IDENTITY_INSERT [dbo].[OrderDetail] ON 
+
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (1, 361406, 7, 1, 25000, 25000)
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (2, 361406, 1018, 1, 18000, 18000)
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (3, 361406, 1018, 2, 18000, 36000)
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (4, 361406, 7, 2, 25000, 50000)
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (5, 361406, 1021, 1, 15000, 15000)
+INSERT [dbo].[OrderDetail] ([No], [OrderId], [ProductId], [Quantity], [Price], [Total]) VALUES (6, 361406, 1020, 1, 15000, 15000)
+SET IDENTITY_INSERT [dbo].[OrderDetail] OFF
 SET IDENTITY_INSERT [dbo].[Product] ON 
 
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1, N'FEV', N'Bánh tráng nướng', 200000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR.jpg?alt=media&token=ea2bdca0-c63f-40e6-91e7-879a0a5756b6', N'banh trang cu?n bơ', N'Food', 1)
@@ -271,9 +284,8 @@ INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description],
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (4, N'FVC', N'Hambuger', 30000, N'Hambuger.jpg', N'Hambuger b? x?t cay', N'Food', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (5, N'FVC', N'Coca', 10000, N'cocacola.jpg', N'nư?c ng?t có gas cocke', N'Drink', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (6, N'FVC', N'combo1', 45000, N'burka.jpg', N'cocacola + hamburger b?', N'Combo', 1)
-INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (7, N'FFC', N'bánh m? kem 1', 25000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F359839763_287744743795388_850612079731700261_n.jpg?alt=media&token=632ddafd-93ff-4ed5-8ae1-46d90332af3c', N'bánh m? nhân k?p vani1', N'Food', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (7, N'FFC', N'Mì Xào', 25000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2Fmi-xao-2.jpg?alt=media&token=29571000-304f-45ae-b9ea-168103e220eb', N'Mì Xào Xào', N'Food', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (8, N'FFC', N'mâmmam', 56000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F323694807_656078839608122_2797946332502206228_n.jpg?alt=media&token=75e2534c-883b-46d8-a0a0-bfc0a95b7232', N'312321', N'Food', 0)
-INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (9, N'FFC', N'combo1', 32000, N'comboFFC', N'2 bánh m? kem + 1 h? xoài', N'Combo', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (10, N'CSG', N'Trà s?a', 20000, N'lytraf.jpg', N'trà s?a trân châu đư?ng  đen', N'Drink', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (11, N'CSG', N'Nư?c cam', 15000, N'nuoccam.jpg', N'cam ép', N'Drink', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (12, N'CSG', N'Combo nư?c', 45000, N'nuoc.jpg', N'2nươc cam + 1tra s?a', N'Combo', 1)
@@ -284,19 +296,21 @@ INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description],
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (17, N'FEV', N'combo mới', 100000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F1.jfif?alt=media&token=a0a43347-5621-40ed-b4dc-9414855facc5', N'số 1', N'Combo', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1013, N'FEV', N'cơm chiên nè', 40000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F5.jfif?alt=media&token=5ec0c5e0-2af6-47a6-83d1-39bb084ac50a', N'cơm chiên nè', N'Food', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1014, N'FEV', N'combo mới', 100000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F4.png?alt=media&token=5565bd27-09e9-4818-ae41-7e3915bfdc2a', N'cơm chiên + nước', N'Combo', 1)
-INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1015, N'FFC', N'fptfpt', 39000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F323694807_656078839608122_2797946332502206228_n.jpg?alt=media&token=984b8444-f0c8-4af6-995e-9a6202dd46b6', N'fptfpt', N'Drink', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1015, N'FFC', N'Bánh Tráng Nướng', 10000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR.jpg?alt=media&token=0c453a53-ba19-4828-9239-88bd5b345a0a', N'Bánh Tráng Nướng', N'Food', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1016, N'FEV', N'uwu uwwu', 123123, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F339135711_321858083623623_6668565926008596782_n.jpg?alt=media&token=06a83285-549f-4df8-adbd-4efe3d5fe775', N'dsfsdf', N'Drink', 1)
 INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1017, N'FEV', N'dfsdfds', 21000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F_MG_1752.jpg?alt=media&token=286e5172-b8b8-4c4e-89a8-b57ab558446a', N'fdfgdg', N'Drink', 1)
-INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1018, N'FFC', N'Sting', 18000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR%20(3).jpg?alt=media&token=4af82ac4-da44-4880-a6a6-38c41a4151a6', N'sting net', N'Food', 1)
-INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1019, N'FFC', N'Combo Net', 59000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR%20(2).jpg?alt=media&token=cfdbbf17-31f0-4aab-bac5-518998cd2b21', N'netnetnet', N'Combo', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1018, N'FFC', N'Sting', 18000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR%20(3).jpg?alt=media&token=4af82ac4-da44-4880-a6a6-38c41a4151a6', N'Sting Dâu Đỏ', N'Drink', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1020, N'FFC', N'Trà Tắc', 15000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2Ftra-tac-giam-can-3.jpg?alt=media&token=13f57152-aabd-417b-91d4-d557cb21cbca', N'Trà Tắc Tắc', N'Drink', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1021, N'FFC', N'Xiên Que', 15000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR%20(4).jpg?alt=media&token=279350de-c9dc-41ec-8912-8457d7cc03d0', N'Xiên que que', N'Food', 1)
+INSERT [dbo].[Product] ([Id], [ShopId], [Name], [Price], [Image], [Description], [Category], [Status]) VALUES (1022, N'FFC', N'Combo 1', 95000, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FR%20(5).jpg?alt=media&token=a54bccca-11d9-4387-8b29-50b7998412df', N'2 Mì Xào + 2 Sting + 1 Xiên Que', N'Combo', 1)
 SET IDENTITY_INSERT [dbo].[Product] OFF
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'CSG', 2, N'clb 1', N'ádasdasd', N't?ng', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'ESC', 3, N'chủa tể chiếc nhẫn', N'123124', N'q9 haa', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'ESCNE', 1, N'clb game', N'1231245123', N'S?nh 123', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'FEV', 1, N'CLb to chuc su kien', N'sự kiện vui vẻ ha', N's?nh 1', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'FFC', 2, N'clb bóng đá', N'đá bóng đ? ghi th?t nhi?u bàn th?ng', N't?ng 4', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'FVC', 1, N'CLb vovinam 12', N'th? d?c th? thao s?c kh?e là s? 1 ', N't?ng G', 1, NULL)
-INSERT [dbo].[Shop] ([Id], [EventId], [Name], [Description], [Area], [Status], [Image]) VALUES (N'VDK', 2, N'aaaasd', N'xcaxca', N'aaaa', 1, NULL)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'CSG', 2, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FLogo%20CSG.JPG?alt=media&token=742ba32b-2743-4f3f-9e6c-e4666f0ad361', N'CSG - CLB Truyền Thông Cóc Sài Gòn', N'CLB Truyền thông Cóc Sài Gòn', N'FPT - 711', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'ESCNE', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F308604869_160887326621592_868590596831418680_n.jpg?alt=media&token=4831a8af-2fbe-4666-ad42-d4ebfdda4406', N'ESC - CLB Thể Thao Điện Tử', N'Cộng đồng sinh viên FPT quan tâm đến Games & Esport', N'FPT Floor 1', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'FCode', 2, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FlogoF-Code.png?alt=media&token=3f1be60c-a7cc-4ed7-80be-011ecad58b96', N'F - Code', N'Code Code Code', N'Library', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'FEV', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2F45466205_288954738613802_5335745147218952192_n%20(1).png?alt=media&token=f3ca825f-cec2-4824-809a-3d9ab6cad606', N'FEV - CLB Tổ Chức Sự Kiện', N'The Way We Went', N'FPT Floor 2', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'FFC', 2, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FLOGO_FFC_PNG.png?alt=media&token=556e323e-2cc8-4855-9cf6-504e3597a74b', N'FFC - CLB Bóng Đá Đại học FPT', N'Sút là vào !!', N'Football Area', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'FStyle', 3, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2FLogo.effect.black.png?alt=media&token=71a167e9-bf66-4665-82f1-6b44cd791dac', N'F - Style', N'Đam mê nhảy', N'Hall A', 1)
+INSERT [dbo].[Shop] ([Id], [EventId], [Image], [Name], [Description], [Area], [Status]) VALUES (N'FVC', 1, N'https://firebasestorage.googleapis.com/v0/b/carmanaager-upload-file.appspot.com/o/Package%2Flogo%20FVC.png?alt=media&token=c3275e2b-747e-48a6-ab75-8b45cbb8c3c0', N'FVC - CLB Vovinam Club', N'FVC - Nơi gắn kết niềm đam mê', N'FPT Floor 5', 1)
 SET IDENTITY_INSERT [dbo].[Transaction] ON 
 
 INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (1, 1, 999691)
@@ -315,6 +329,7 @@ INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (13, 0, 350361)
 INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (14, 1, 976065)
 INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (15, 1, 630199)
 INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (16, 1, 287747)
+INSERT [dbo].[Transaction] ([Id], [CardId], [OrderId]) VALUES (17, 1, 361406)
 SET IDENTITY_INSERT [dbo].[Transaction] OFF
 ALTER TABLE [dbo].[Account] ADD  DEFAULT ('true') FOR [Status]
 GO
@@ -380,9 +395,3 @@ REFERENCES [dbo].[Event] ([ID])
 GO
 ALTER TABLE [dbo].[Shop] CHECK CONSTRAINT [FKShop68550]
 GO
-ALTER TABLE [dbo].[Transaction]  WITH CHECK ADD  CONSTRAINT [FKTransactio687479] FOREIGN KEY([OrderId])
-REFERENCES [dbo].[Order] ([Id])
-GO
-ALTER TABLE [dbo].[Transaction] CHECK CONSTRAINT [FKTransactio687479]
-GO
-
