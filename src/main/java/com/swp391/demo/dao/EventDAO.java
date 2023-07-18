@@ -187,5 +187,47 @@ public class EventDAO implements Serializable {
         return dto;
     }
     
-   
+      public EventDTO getEvent(int key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        EventDTO dto = null;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select Id, Image, Name, Description, BeginDate, EndDate, Area, Username, Status "
+                        + " From Event  "
+                        + " where Id = ? ";
+                        
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt("Id");
+                    String img = rs.getString("Image");
+                    String name = rs.getNString("Name");
+                    String des = rs.getNString("Description");
+                    Date beginDate = rs.getDate("BeginDate");
+                    Date endDate = rs.getDate("EndDate");
+                    String area = rs.getString("Area");
+                    String username = rs.getString("Username");
+                    Boolean status = rs.getBoolean("Status");
+                    dto = new EventDTO(id, img, name, des, beginDate, endDate, area, username, status);
+
+                }
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return dto;
+    }
 }
