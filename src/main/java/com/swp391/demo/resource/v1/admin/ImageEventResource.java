@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author lnhtr
  */
-@Path("v1/admin/img")
+@Path("v1/admin/image")
 public class ImageEventResource {
 
     private ImageEventDAO dao = ImageEventDAO.getInstance();

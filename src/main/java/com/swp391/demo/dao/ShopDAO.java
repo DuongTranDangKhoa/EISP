@@ -73,7 +73,7 @@ public class ShopDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Insert into Shop(Id, EventId, Image, Name, Description,Area) "
-                        + " Values(?,?,?,?,?)";
+                        + " Values(?,?,?,?,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getId());
                 stm.setInt(2, dto.getEventId());
