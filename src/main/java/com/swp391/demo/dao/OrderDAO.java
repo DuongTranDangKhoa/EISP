@@ -152,13 +152,12 @@ public class OrderDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Select * From [Order] "
-                        + " Where ShopId = ? "
-                        + " and Date  between ? and ? "
-                        + " Group by ShopID";
+                        + " Where ShopId = ? ";
+                        
                 stm = con.prepareStatement(sql);
                 stm.setString(1, key);
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                while (rs.next()) {
                     int id = rs.getInt("Id");
                     String shopId = rs.getString("ShopId");
                     int cardId = rs.getInt("CardId");
