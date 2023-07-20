@@ -8,6 +8,7 @@ import com.swp391.demo.dao.AccountDAO;
 import com.swp391.demo.dao.AccountSetDAO;
 import com.swp391.demo.dto.AccountDTO;
 import com.swp391.demo.dto.AccountSetDTO;
+import com.swp391.demo.dto.ErrorDTO;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -85,7 +86,7 @@ public class AccountResource {
         dao.listAccountNotRelation();
         List<AccountDTO> list = dao.getListAccountShopOff();
         if (list == null) {
-            return Response.ok(200).build();
+            return Response.ok(new ErrorDTO()).build();
         }
         return Response.ok(list).build();
     }
