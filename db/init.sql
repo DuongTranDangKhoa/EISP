@@ -1,6 +1,6 @@
 USE [master]
 go
-	DROP DATABASE [EIPS]
+	/*DROP DATABASE [EIPS] */
 go	
 	CREATE DATABASE [EIPS]
 go
