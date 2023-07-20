@@ -86,7 +86,7 @@ public class AccountResource {
         dao.listAccountNotRelation();
         List<AccountDTO> list = dao.getListAccountShopOff();
         if (list == null) {
-            return Response.ok(new ErrorDTO()).build();
+            return Response.status(500).build();
         }
         return Response.ok(list).build();
     }
