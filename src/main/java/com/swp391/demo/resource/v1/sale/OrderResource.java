@@ -12,6 +12,7 @@ import com.swp391.demo.dao.ProductDAO;
 import com.swp391.demo.dao.TransactionDAO;
 import com.swp391.demo.dto.ComboDTO;
 import com.swp391.demo.dto.OrderCheckDTO;
+import com.swp391.demo.dto.OrderDTO;
 import com.swp391.demo.dto.OrderDetailCheckDTO;
 import com.swp391.demo.dto.OrderDetailDTO;
 import com.swp391.demo.dto.ProductDTO;
@@ -50,46 +51,58 @@ public class OrderResource {
 //        dao2.getProductShop(list.get(0).getShopId());
 //        List<ProductDTO> pl = dao2.getProductList();
         int id = dao.checkOrderId();
-        System.out.println(id);
+
+        boolean result2 = dao4.withdraw(list.get(0).getCardId(),
+                dao4.getbalance(list.get(0).getCardId()) - list.get(0).getTotal());
+        if (!result2) {
+            return Response.status(406, "Not enought money").build();
+        }
+
         boolean result = dao.createOrder(list.get(0), id);
         if (!result) {
             return Response.status(406, "Can not Create Order").build();
         }
+
         TransactionDTO t = new TransactionDTO(list.get(0).getCardId(), id);
         boolean result1 = dao5.createTransaction(t);
         if (!result1) {
             return Response.status(406, "Can not Create Transaction").build();
         }
-        boolean result2 = dao4.withdraw(list.get(0).getCardId(),
-                dao4.getbalance(list.get(0).getCardId()) - list.get(0).getTotal());
-        if (!result2) {
-            return Response.status(406, "Can not withdraw money").build();
-        }
+
         for (int i = 1; i < list.size(); i++) {
-            if (list.get(i).getCategory().equals("Combo")) {
-                dao3.getInfoCombo(list.get(i).getProductId());
-                List<ComboDTO> cb = dao3.getListCombo();
-                for (int j = 0; j < cb.size(); j++) {
-                    OrderDetailDTO dto = new OrderDetailDTO(id,
-                            cb.get(j).getIdMake(),
-                            list.get(i).getQuantity() * cb.get(j).getQuantity(),
-                            dao2.getPrice(cb.get(j).getIdMake()),
-                            0);
-                    boolean x = dao1.createDetail(dto);
-                    if (x == false) {
-                        return Response.status(406, "Fail when insetrt orderdetail Combo").build();
-                    }
-                }
-            } else {
-                OrderDetailDTO dto = new OrderDetailDTO(id,
-                        list.get(i).getProductId(),
-                        list.get(i).getQuantity(),
-                        dao2.getPrice(list.get(i).getProductId()),
-                        0);
-                boolean x = dao1.createDetail(dto);
-                if (x == false) {
-                    return Response.status(406, "Fail when insetrt orderdetail Product").build();
-                }
+//            if (list.get(i).getCategory().equals("Combo")) {
+//                dao3.getInfoCombo(list.get(i).getProductId());
+//                List<ComboDTO> cb = dao3.getListCombo();
+//                for (int j = 0; j < cb.size(); j++) {
+//                    OrderDetailDTO dto = new OrderDetailDTO(id,
+//                            cb.get(j).getIdMake(),
+//                            list.get(i).getQuantity() * cb.get(j).getQuantity(),
+//                            dao2.getPrice(cb.get(j).getIdMake()),
+//                            0);
+//                    boolean x = dao1.createDetail(dto);
+//                    if (x == false) {
+//                        return Response.status(406, "Fail when insetrt orderdetail Combo").build();
+//                    }
+//                }
+//            } else {
+//                OrderDetailDTO dto = new OrderDetailDTO(id,
+//                        list.get(i).getProductId(),
+//                        list.get(i).getQuantity(),
+//                        dao2.getPrice(list.get(i).getProductId()),
+//                        0);
+//                boolean x = dao1.createDetail(dto);
+//                if (x == false) {
+//                    return Response.status(406, "Fail when insetrt orderdetail Product").build();
+//                }
+//            }
+            OrderDetailDTO dto = new OrderDetailDTO(id,
+                    list.get(i).getProductId(),
+                    list.get(i).getQuantity(),
+                    dao2.getPrice(list.get(i).getProductId()),
+                    0);
+            boolean x = dao1.createDetail(dto);
+            if (x == false) {
+                return Response.status(406, "Fail when insetrt orderdetail Product").build();
             }
         }
         return Response.status(Response.Status.ACCEPTED).build();
@@ -101,21 +114,70 @@ public class OrderResource {
     public Response checkProductSold(@PathParam("shopId") String shopId) throws SQLException {
         dao2.getAllProductShop(shopId);
         List<ProductDTO> productList = dao2.getAllProductList();
+
         dao1.viewQuatityProduct(shopId);
         List<OrderDetailDTO> productSoldList = dao1.getListProductSold();
+
         if (productSoldList != null) {
             List<OrderDetailCheckDTO> list = new ArrayList<>();
             for (OrderDetailDTO x : productSoldList) {
                 for (ProductDTO i : productList) {
                     if (x.getProductId() == i.getId()) {
                         OrderDetailCheckDTO dto = new OrderDetailCheckDTO(x.getProductId(), i.getShopId(), i.getName(), i.getImg(), i.getDescription(), i.getCategory(), x.getQuantity());
-                        list.add(dto);
-                        break;
+                        if (dto.getCategory().equals("Combo")) {
+                            dao3.getInfoCombo(dto.getProductId());
+                            List<ComboDTO> cb = dao3.getListCombo();
+                            for (int j = 0; j < cb.size(); j++) {
+                                ProductDTO c = dao2.getProduct(cb.get(j).getIdMake());
+                                OrderDetailCheckDTO dto1 = new OrderDetailCheckDTO(c.getId(),
+                                        i.getShopId(),
+                                        c.getName(),
+                                        c.getImg(),
+                                        c.getDescription(),
+                                        c.getCategory(),
+                                        x.getQuantity() * cb.get(j).getQuantity());
+                                list.add(dto1);
+                            }
+                            break;
+                        } else {
+                            list.add(dto);
+                            break;
+                        }
                     }
                 }
             }
             return Response.ok(list).build();
         }
         return Response.ok().build();
+    }
+
+    @Path("infoOrder")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInforOrder(OrderDTO dto) throws SQLException {
+        dao1.getInfoOrder(dto.getId());
+        List<OrderDetailDTO> od = dao1.getListInfoOrder();
+        dao2.getAllProductShop(dto.getShopId());
+        List<ProductDTO> pd = dao2.getAllProductList();
+        List<OrderCheckDTO> list = new ArrayList<>();
+
+        int id = dao.getCard(dto.getId());
+        for (OrderDetailDTO x : od) {
+            for (ProductDTO i : pd) {
+                if (x.getProductId() == i.getId()) {
+                    OrderCheckDTO check = new OrderCheckDTO(dto.getShopId(),
+                            id,
+                            0,
+                            i.getId(),
+                            x.getQuantity(),
+                            0,
+                            i.getDescription());
+                    list.add(check);
+                    break;
+                }
+            }
+        }
+        return Response.ok(list).build();
     }
 }

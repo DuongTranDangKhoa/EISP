@@ -160,7 +160,7 @@ public class CardDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Update Card "
-                        + " Set Username = ?, Balance = ?, PhoneNumber = ?, Status = 'false'"
+                        + " Set Username = ?, Balance = ?, PhoneNumber = ?, Status = 'true'"
                         + " Where Id = ?";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, dto.getUsername());
@@ -331,4 +331,35 @@ public class CardDAO implements Serializable {
         }
         return id;
     }
+     
+       public boolean updateCardAdmin(CardDTO dto) throws SQLException {
+        PreparedStatement stm = null;
+        boolean result = false;
+
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Update Card "
+                        + " Set  Status = ?"
+                        + " Where Id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, dto.isStatus());
+                stm.setInt(2, dto.getId());
+                int x = stm.executeUpdate();
+                if (x > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+
+    }
+
 }

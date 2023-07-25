@@ -25,6 +25,7 @@ public class OrderDAO implements Serializable {
     private Connection con = DBUtil.makeConnection();
     private static OrderDAO instance;
     private List<OrderDTO> listOrder;
+    private List<OrderDTO> listOrderEvent;
 
     public static OrderDAO getInstance() {
         if (instance == null) {
@@ -35,6 +36,10 @@ public class OrderDAO implements Serializable {
 
     public List<OrderDTO> getListOrder() {
         return listOrder;
+    }
+
+    public List<OrderDTO> getListOrderEvent() {
+        return listOrderEvent;
     }
 
     public int checkOrderId() throws SQLException {
@@ -153,7 +158,7 @@ public class OrderDAO implements Serializable {
             if (con != null) {
                 String sql = "Select * From [Order] "
                         + " Where ShopId = ? ";
-                        
+
                 stm = con.prepareStatement(sql);
                 stm.setString(1, key);
                 rs = stm.executeQuery();
@@ -181,5 +186,79 @@ public class OrderDAO implements Serializable {
                 con.close();
             }
         }
+    }
+
+    public void listOrderInEvent(String key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        listOrderEvent = null;
+
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select o.No, o.Id, o.[Date], o.ShopId, o.CardId, o.Total From [Order] o, Event e, Shop s "
+                        + " Where e.Id =  s.EventId "
+                        + " and o.ShopId = s.Id "
+                        + " and e.Id = ? "
+                        + " Order by o.No";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, key);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int id = rs.getInt("Id");
+                    String shopId = rs.getString("ShopId");
+                    int cardId = rs.getInt("CardId");
+                    Date date = rs.getDate("Date");
+                    Double total = rs.getDouble("Total");
+                    OrderDTO dto = new OrderDTO(id, shopId, cardId, date, null, total);
+                    if (listOrderEvent == null) {
+                        listOrderEvent = new ArrayList<>();
+                    }
+                    listOrderEvent.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public int getCard(int key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int cardId = 0;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select CardId From [Order] "
+                        + " Where OrderId = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    cardId = rs.getInt("CardId");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return cardId;
     }
 }

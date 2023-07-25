@@ -347,4 +347,42 @@ public class ProductDAO implements Serializable {
         }
         return price;
     }
+    
+    public ProductDTO getProduct(int key) throws SQLException {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO dto = null;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select * "
+                        + " From Product "
+                        + " Where Id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String name = rs.getString("Name");
+                    String image = rs.getString("Image");
+                    String des = rs.getString("Descrption");
+                    String category = rs.getString("Category");
+                    
+                    dto = new ProductDTO(key, null, name, 0, image, des, category, true);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return dto;
+    }
+    
+    
 }

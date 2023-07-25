@@ -24,6 +24,8 @@ public class OrderDetailDAO implements Serializable {
     private Connection con = DBUtil.makeConnection();
     private static OrderDetailDAO instance;
     private List<OrderDetailDTO> listProductSold;
+    private List<OrderDetailDTO> listInfoOrder;
+    
 
     public List<OrderDetailDTO> getListProductSold() {
         return listProductSold;
@@ -36,6 +38,11 @@ public class OrderDetailDAO implements Serializable {
         }
         return instance;
     }
+
+    public List<OrderDetailDTO> getListInfoOrder() {
+        return listInfoOrder;
+    }
+    
     
     public boolean createDetail(OrderDetailDTO dto) throws SQLException {
         PreparedStatement stm = null;
@@ -91,6 +98,43 @@ public class OrderDetailDAO implements Serializable {
                         listProductSold = new ArrayList<>();
                     }
                     listProductSold.add(dto);
+                }
+                
+            }
+            
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    public void getInfoOrder(int key) throws SQLException{
+         PreparedStatement stm = null;
+        ResultSet rs = null;
+        listInfoOrder = null;
+        try {
+            con = DBUtil.makeConnection();
+            if (con != null) {
+                String sql = "Select * from OrderDetail "
+                        + " Where OrderId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, key);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("ProductId");
+                    int quantity = rs.getInt("Quantity");
+                    OrderDetailDTO dto = new  OrderDetailDTO(key, productId, quantity, 0, 0);
+                    if (listInfoOrder == null) {
+                        listInfoOrder = new ArrayList<>();
+                    }
+                    listInfoOrder.add(dto);
                 }
                 
             }
