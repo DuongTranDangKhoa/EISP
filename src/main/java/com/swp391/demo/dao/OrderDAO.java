@@ -188,7 +188,7 @@ public class OrderDAO implements Serializable {
         }
     }
 
-    public void listOrderInEvent(String key) throws SQLException {
+    public void listOrderInEvent(int key) throws SQLException {
         PreparedStatement stm = null;
         ResultSet rs = null;
         listOrderEvent = null;
@@ -203,7 +203,7 @@ public class OrderDAO implements Serializable {
                         + " Order by o.No";
 
                 stm = con.prepareStatement(sql);
-                stm.setString(1, key);
+                stm.setInt(1, key);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("Id");

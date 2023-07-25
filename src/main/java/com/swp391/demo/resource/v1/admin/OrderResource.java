@@ -13,6 +13,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -27,14 +28,12 @@ public class OrderResource {
     @Path("{eventId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getListOrder(@PathParam("eventId") int id) {
-        dao.getListOrderEvent();
+    public Response getListOrder(@PathParam("eventId") int id) throws SQLException {
+        dao.listOrderInEvent(id);
         List<OrderDTO> list = dao.getListOrderEvent();
         if (list == null) {
             return Response.ok(new ErrorDTO("No Order has existed")).build();
         }
         return Response.ok(list).build();
-   
-        
     }
 }
