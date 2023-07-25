@@ -364,7 +364,7 @@ public class ProductDAO implements Serializable {
                 if (rs.next()) {
                     String name = rs.getString("Name");
                     String image = rs.getString("Image");
-                    String des = rs.getString("Descrption");
+                    String des = rs.getNString("Description");
                     String category = rs.getString("Category");
                     
                     dto = new ProductDTO(key, null, name, 0, image, des, category, true);
