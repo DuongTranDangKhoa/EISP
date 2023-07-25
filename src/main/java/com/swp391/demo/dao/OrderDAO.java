@@ -239,7 +239,7 @@ public class OrderDAO implements Serializable {
             con = DBUtil.makeConnection();
             if (con != null) {
                 String sql = "Select CardId From [Order] "
-                        + " Where OrderId = ?";
+                        + " Where Id = ?";
 
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, key);
