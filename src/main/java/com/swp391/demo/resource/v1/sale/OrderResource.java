@@ -11,6 +11,7 @@ import com.swp391.demo.dao.OrderDetailDAO;
 import com.swp391.demo.dao.ProductDAO;
 import com.swp391.demo.dao.TransactionDAO;
 import com.swp391.demo.dto.ComboDTO;
+import com.swp391.demo.dto.NoDTO;
 import com.swp391.demo.dto.OrderCheckDTO;
 import com.swp391.demo.dto.OrderDTO;
 import com.swp391.demo.dto.OrderDetailCheckDTO;
@@ -117,9 +118,9 @@ public class OrderResource {
 
         dao1.viewQuatityProduct(shopId);
         List<OrderDetailDTO> productSoldList = dao1.getListProductSold();
+        List<OrderDetailCheckDTO> list = new ArrayList<>();
 
         if (productSoldList != null) {
-            List<OrderDetailCheckDTO> list = new ArrayList<>();
             for (OrderDetailDTO x : productSoldList) {
                 for (ProductDTO i : productList) {
                     if (x.getProductId() == i.getId()) {
@@ -146,7 +147,15 @@ public class OrderResource {
                     }
                 }
             }
-            return Response.ok(list).build();
+
+        }
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i).getProductId() == list.get(j).getProductId()) {
+                    list.get(i).setQuantity(list.get(i).getQuantity() + list.get(j).getQuantity());
+                    list.remove(list.get(j));
+                }
+            }
         }
         return Response.ok().build();
     }
@@ -178,6 +187,21 @@ public class OrderResource {
                 }
             }
         }
+        
+        for (int i = 0; i < list.size()-1; i++) {
+            List<NoDTO> index = new ArrayList<>();
+            for (int j = i+1; j < list.size(); j++) {
+                if (list.get(i).getProductId() == list.get(j).getProductId()) {
+                    list.get(i).setQuantity(list.get(i).getQuantity() + list.get(j).getQuantity());
+                    index.add(new NoDTO(j));
+                }
+            }
+            for (int j = index.size()-1; j >= 0; j--) {
+                list.remove(index.get(j).getNo());
+            }
+        }
+
         return Response.ok(list).build();
     }
 }
+
