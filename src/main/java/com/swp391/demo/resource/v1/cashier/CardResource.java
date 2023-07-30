@@ -30,6 +30,7 @@ public class CardResource {
         if (pc) {
             boolean result = dao.UpdateCard(dto);
             if (result) {
+                dto.setStatus(true);
                 return Response.ok(dto).build();
             }
         }

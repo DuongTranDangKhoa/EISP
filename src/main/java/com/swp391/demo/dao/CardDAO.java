@@ -277,7 +277,7 @@ public class CardDAO implements Serializable {
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     boolean status = rs.getBoolean("Status");
-                    if (status) {
+                    if (status == false) {
                         result = true;
                     }
                 }
