@@ -40,10 +40,10 @@ public class EventResource {
         
       
         if (dto.getBeginDate().before(date)) {
-            return Response.ok(new ErrorDTO("Date Invaild")).build();
+            return Response.ok(new ErrorDTO("Date not vaild")).build();
         }
         if (dto.getEndDate().before(dto.getBeginDate())) {
-            return Response.ok(new ErrorDTO("Date Invaild")).build();
+            return Response.ok(new ErrorDTO("Date not vaild")).build();
         }
         boolean result = dao.createEvent(dto);
         if (result) {
