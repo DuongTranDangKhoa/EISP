@@ -4,7 +4,7 @@ go
 go	
 	CREATE DATABASE [EIPS]
 go
-/*USE [EIPS]*/
+USE [EIPS]
 GO
 /****** Object:  Table [dbo].[Account]    Script Date: 7/18/2023 9:43:08 PM ******/
 SET ANSI_NULLS ON
